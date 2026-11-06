@@ -1,0 +1,127 @@
+# PH_run06 pad model. Pad GIA LAP cho hoc tap, khong phai IO cell cua foundry.
+VERSION 5.8 ;
+BUSBITCHARS "[]" ;
+DIVIDERCHAR "/" ;
+
+SITE padsite
+  CLASS PAD ;
+  SIZE 10.000 BY 30.000 ;
+END padsite
+
+MACRO PADIN
+  CLASS PAD INPUT ;
+  ORIGIN 0 0 ;
+  FOREIGN PADIN 0 0 ;
+  SIZE 10.000 BY 30.000 ;
+  SYMMETRY X Y ;
+  SITE padsite ;
+  PIN PAD
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER Metal9 ;
+        RECT 2.000 3.000 8.000 9.000 ;
+    END
+  END PAD
+  PIN C
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER Metal4 ;
+        RECT 4.500 28.000 5.500 29.000 ;
+    END
+  END C
+  OBS
+    LAYER Metal1 ;
+      RECT 0.000 0.000 10.000 30.000 ;
+    LAYER Metal2 ;
+      RECT 0.000 0.000 10.000 30.000 ;
+    LAYER Metal3 ;
+      RECT 0.000 0.000 10.000 30.000 ;
+  END
+END PADIN
+
+MACRO PADOUT
+  CLASS PAD OUTPUT ;
+  ORIGIN 0 0 ;
+  FOREIGN PADOUT 0 0 ;
+  SIZE 10.000 BY 30.000 ;
+  SYMMETRY X Y ;
+  SITE padsite ;
+  PIN I
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER Metal4 ;
+        RECT 4.500 28.000 5.500 29.000 ;
+    END
+  END I
+  PIN PAD
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER Metal9 ;
+        RECT 2.000 3.000 8.000 9.000 ;
+    END
+  END PAD
+  OBS
+    LAYER Metal1 ;
+      RECT 0.000 0.000 10.000 30.000 ;
+    LAYER Metal2 ;
+      RECT 0.000 0.000 10.000 30.000 ;
+    LAYER Metal3 ;
+      RECT 0.000 0.000 10.000 30.000 ;
+  END
+END PADOUT
+
+MACRO PADVDD
+  CLASS PAD POWER ;
+  ORIGIN 0 0 ;
+  FOREIGN PADVDD 0 0 ;
+  SIZE 10.000 BY 30.000 ;
+  SYMMETRY X Y ;
+  SITE padsite ;
+  PIN VDD
+    DIRECTION INOUT ;
+    USE POWER ;
+    PORT
+      LAYER Metal8 ;
+        RECT 3.000 8.000 7.000 30.000 ;
+    END
+  END VDD
+  OBS
+    LAYER Metal1 ;
+      RECT 0.000 0.000 10.000 30.000 ;
+    LAYER Metal2 ;
+      RECT 0.000 0.000 10.000 30.000 ;
+    LAYER Metal3 ;
+      RECT 0.000 0.000 10.000 30.000 ;
+  END
+END PADVDD
+
+MACRO PADVSS
+  CLASS PAD POWER ;
+  ORIGIN 0 0 ;
+  FOREIGN PADVSS 0 0 ;
+  SIZE 10.000 BY 30.000 ;
+  SYMMETRY X Y ;
+  SITE padsite ;
+  PIN VSS
+    DIRECTION INOUT ;
+    USE GROUND ;
+    PORT
+      LAYER Metal8 ;
+        RECT 3.000 8.000 7.000 30.000 ;
+    END
+  END VSS
+  OBS
+    LAYER Metal1 ;
+      RECT 0.000 0.000 10.000 30.000 ;
+    LAYER Metal2 ;
+      RECT 0.000 0.000 10.000 30.000 ;
+    LAYER Metal3 ;
+      RECT 0.000 0.000 10.000 30.000 ;
+  END
+END PADVSS
+
+END LIBRARY

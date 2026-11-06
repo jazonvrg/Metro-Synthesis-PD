@@ -1,0 +1,614 @@
+
+Cadence Innovus(TM) Implementation System.
+Copyright 2025 Cadence Design Systems, Inc. All rights reserved worldwide.
+
+Version:	v25.12-s079_1, built Tue Nov 18 12:56:37 PST 2025
+Options:	-stylus 
+Date:		Fri Nov  6 13:27:36 2026
+Host:		shtp (x86_64 w/Linux 5.14.0-687.20.1.el9_8.x86_64) (20cores*80cpus*Intel(R) Xeon(R) Gold 6230 CPU @ 2.10GHz 28160KB)
+OS:		AlmaLinux 9.8 (Olive Jaguar)
+
+License:
+		[13:27:36.214449] Configured Lic search path (25.01-s002): 5280@10.253.1.1
+
+		invs	Innovus Implementation System	INVS100	25.1
+		8 CPU jobs allowed with the current license(s). Use set_multi_cpu_usage to set your required CPU count.
+
+
+Create and set the environment variable TMPDIR to /data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/innovus_temp_2982056_26838cd0-48a1-4118-8347-d463843337a3_shtp_competitor01_HpJTXc.
+
+Change the soft stacksize limit to 0.2%RAM (1028 mbytes). Set global soft_stack_size_limit to change the value.
+Info: Process UID = 2982056 / 26838cd0-48a1-4118-8347-d463843337a3 / eYQfSOlNbh
+
+**INFO:  MMMC transition support version v31-84 
+
+@innovus 1> source import.tcl 
+#@ Begin verbose source (pre): source import.tcl 
+@file 1: # PH_run06: import co pad. Top moi = metro_card_pad_top (wrapper), core = metro_card_top.
+@file 2: # Can co san trong thu muc run: pad_model.lef, pad_model.lib, metro_card_pad_top.v (chay gen_pad_files.py truoc).
+@file 3: set PDK /data/loadtest-eda-design/INNOVUS/DESIGN/GPDK
+@file 4: set SNAP /data/thithietkevmbd/home/competitor01/pd_metro_card/handoff/snap_20261104_1117_rtle257a4e0
+@file 5: set MAC /data/thithietkevmbd/home/competitor01/pd_metro_card/macro_PLACEHOLDER/v2
+@file 6:
+@file 7: # SDC goc co dong "current_design metro_card_top" (se tro vao module con) -> loai bo dong do.
+@file 8: set fin [open $SNAP/outputs/innovus_metro_card_top.default_emulate_constraint_mode.sdc r]
+@file 9: set sdc_txt [read $fin]
+@file 10: close $fin
+@file 11: set fout [open pad_func.sdc w]
+@file 12: foreach line [split $sdc_txt "\n"] {
+    if {[regexp {^\s*current_design\s} $line]} { continue }
+    puts $fout $line
+}
+@file 16: close $fout
+@file 17:
+@@file 18: set_db design_process_node 45
+**WARN: (IMPDB-6501):	"set_db design_process_node" will be obsoleted in future release. Remove it from the script to avoid the interruption of running the script in future.
+##  Process: 45            (User Set)               
+##     Node: (not set)                           
+
+##  Check design process and node:  
+##  Design tech node is not set.
+
+Applying the recommended capacitance filtering threshold values for 45nm process node: total_c_th=0, relative_c_th=1 and coupling_c_th=0.1.
+	These values will be used by all post-route extraction engines, including TQuantus, IQuantus and Quantus QRC extraction.
+	Capacitance filtering mode(extract_rc_cap_filter_mode option of the set_db) is 'relative_and_coupling' for all engines.
+	The accuracy mode for post_route extract_rc_effort_level low extraction will be set to 'high'.
+	Default value for EffortLevel(extract_rc_effort_level option of the set_db) in post_route extraction mode will be 'medium' if Quantus QRC technology file is specified else 'low'.
+@@file 19: read_mmmc [file join [pwd] mmmc_pad.tcl]
+#@ Begin verbose source /data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/mmmc_pad.tcl (pre)
+@file 1: # PH_run06 MMMC: giong mmmc_typ.tcl cua run04/05, them pad_model.lib va SDC da bo current_design.
+@file 2: set PDK /data/loadtest-eda-design/INNOVUS/DESIGN/GPDK
+@file 3: set MAC /data/thithietkevmbd/home/competitor01/pd_metro_card/macro_PLACEHOLDER/v2
+@file 4:
+@@file 5: create_library_set -name PH_typ_libs \
+    -timing [list $PDK/LIBS/GPDK045/timing/typical.lib $MAC/sram_placeholder_typical.lib [file join [pwd] pad_model.lib]]
+@file 7:
+@@file 8: create_opcond -name PH_typ_opcond -process 1.0 -voltage 1.2 -temperature 25.0
+@file 9:
+@@file 10: create_timing_condition -name PH_typ_tc \
+    -opcond PH_typ_opcond \
+    -library_sets { PH_typ_libs }
+@file 13:
+@@file 14: create_rc_corner -name PH_typ_rc \
+    -temperature 25.0 \
+    -qrc_tech $PDK/TECH/qrcTechFile \
+    -cap_table $PDK/TECH/capTable
+@file 18:
+@@file 19: create_delay_corner -name PH_typ_dc \
+    -early_timing_condition { PH_typ_tc } \
+    -late_timing_condition { PH_typ_tc } \
+    -early_rc_corner PH_typ_rc \
+    -late_rc_corner PH_typ_rc
+@file 24:
+@@file 25: create_constraint_mode -name PH_func \
+    -sdc_files [list [file join [pwd] pad_func.sdc]]
+@file 27:
+@@file 28: create_analysis_view -name PH_typ_view \
+    -constraint_mode PH_func \
+    -delay_corner PH_typ_dc
+@file 31:
+@@file 32: set_analysis_view -setup { PH_typ_view } -hold { PH_typ_view }
+#@ End verbose source /data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/mmmc_pad.tcl
+Reading PH_typ_libs timing library '/data/loadtest-eda-design/INNOVUS/DESIGN/GPDK/LIBS/GPDK045/timing/typical.lib' ...
+Read 477 cells in library 'typical' 
+Reading PH_typ_libs timing library '/data/thithietkevmbd/home/competitor01/pd_metro_card/macro_PLACEHOLDER/v2/sram_placeholder_typical.lib' ...
+**WARN: (TECHLIB-302):	No function defined for cell 'sram_DATA32_HASH24_BIT_COUNT9600000'. The cell will only be used for analysis. (File /data/thithietkevmbd/home/competitor01/pd_metro_card/macro_PLACEHOLDER/v2/sram_placeholder_typical.lib)
+Read 1 cells in library 'sram_placeholder_typical' 
+Reading PH_typ_libs timing library '/data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/pad_model.lib' ...
+Read 4 cells in library 'pad_model_typical' 
+@@file 20: read_physical -lef [list $PDK/LIBS/GPDK045/gsclib045.lef $MAC/sram_placeholder.lef [file join [pwd] pad_model.lef]]
+
+Loading LEF file /data/loadtest-eda-design/INNOVUS/DESIGN/GPDK/LIBS/GPDK045/gsclib045.lef ...
+Set DBUPerIGU to M2 pitch 400.
+
+Loading LEF file /data/thithietkevmbd/home/competitor01/pd_metro_card/macro_PLACEHOLDER/v2/sram_placeholder.lef ...
+
+Loading LEF file /data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/pad_model.lef ...
+**WARN: (IMPLF-200):	Pin 'I' in macro 'PADOUT' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-201):	Pin 'PAD' in macro 'PADOUT' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-200):	Pin 'PAD' in macro 'PADIN' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-201):	Pin 'C' in macro 'PADIN' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-200):	Pin 'PCLK' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'PRESETN' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'start' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'mode' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'id_data[0]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'id_data[1]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'id_data[2]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'id_data[3]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'id_data[4]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'id_data[5]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'id_data[6]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'id_data[7]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'id_data[8]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'id_data[9]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'id_data[10]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'id_data[11]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'id_data[12]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'id_data[13]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (EMS-27):	Message (IMPLF-200) has exceeded the current message display limit of 20.
+To increase the message display limit, refer to the product command reference manual.
+**WARN: (IMPLF-201):	Pin 'match' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-201):	Pin 'fallback_match' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-201):	Pin 'done' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-201):	Pin 'program_done' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-201):	Pin 'programmed_id[0]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-201):	Pin 'programmed_id[1]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-201):	Pin 'programmed_id[2]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-201):	Pin 'programmed_id[3]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-201):	Pin 'programmed_id[4]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-201):	Pin 'programmed_id[5]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-201):	Pin 'programmed_id[6]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-201):	Pin 'programmed_id[7]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-201):	Pin 'programmed_id[8]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-201):	Pin 'programmed_id[9]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-201):	Pin 'programmed_id[10]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-201):	Pin 'programmed_id[11]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-201):	Pin 'programmed_id[12]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-201):	Pin 'programmed_id[13]' in macro 'sram_DATA32_HASH24_BIT_COUNT9600000' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (EMS-27):	Message (IMPLF-201) has exceeded the current message display limit of 20.
+To increase the message display limit, refer to the product command reference manual.
+
+##  Check design process and node:  
+##  Design tech node is not set.
+
+@@file 21: read_netlist [list $SNAP/outputs/innovus_metro_card_top.v [file join [pwd] metro_card_pad_top.v]] -top metro_card_pad_top
+#% Begin Load netlist data ... (date=11/06 13:28:21, mem=2009.4M)
+*** Begin netlist parsing (mem=2009.4M) ***
+**WARN: (IMPVL-159):	Pin 'VDD' of cell 'OAI211XL' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VSS' of cell 'OAI211XL' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VDD' of cell 'CLKAND2X4' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VSS' of cell 'CLKAND2X4' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VDD' of cell 'SEDFFHQX1' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VSS' of cell 'SEDFFHQX1' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VDD' of cell 'EDFFTRX2' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VSS' of cell 'EDFFTRX2' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VDD' of cell 'NOR3X4' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VSS' of cell 'NOR3X4' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VDD' of cell 'DFFHQX4' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VSS' of cell 'DFFHQX4' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VDD' of cell 'CLKMX2X8' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VSS' of cell 'CLKMX2X8' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VSS' of cell 'XOR3X1' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VDD' of cell 'XOR3X1' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VDD' of cell 'OAI222XL' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VSS' of cell 'OAI222XL' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VDD' of cell 'OA22XL' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VSS' of cell 'OA22XL' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (EMS-27):	Message (IMPVL-159) has exceeded the current message display limit of 20.
+To increase the message display limit, refer to the product command reference manual.
+Created 482 new cells from 3 timing libraries.
+Reading netlist ...
+Backslashed names will retain backslash and a trailing blank character.
+Reading verilog netlist '/data/thithietkevmbd/home/competitor01/pd_metro_card/handoff/snap_20261104_1117_rtle257a4e0/outputs/innovus_metro_card_top.v'
+Reading verilog netlist '/data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/metro_card_pad_top.v'
+
+*** Memory Usage v#3 (Current mem = 2023.215M, initial mem = 963.285M) ***
+*** End netlist parsing (cpu=0:00:00.1, real=0:00:00.0, mem=2023.2M) ***
+#% End Load netlist data ... (date=11/06 13:28:21, total cpu=0:00:00.1, real=0:00:00.0, peak res=2023.2M, current mem=2023.2M)
+Set top cell to metro_card_pad_top.
+Hooked 482 DB cells to tlib cells.
+Starting recursive module instantiation check.
+No recursion found.
+Building hierarchical netlist for Cell metro_card_pad_top ...
+***** UseNewTieNetMode *****.
+*** Netlist is unique.
+** info: there are 494 modules.
+** info: there are 5550 stdCell insts.
+** info: there are 5550 stdCell insts with at least one signal pin.
+** info: there are 78 Pad insts.
+** info: there are 1 macros.
+
+*** Memory Usage v#3 (Current mem = 2070.688M, initial mem = 963.285M) ***
+@file 22:
+@@file 23: set_db init_power_nets VDD
+@@file 24: set_db init_ground_nets VSS
+@@file 25: init_design
+Initializing I/O assignment ...
+Adjusting Core to Bottom to: 0.0200.
+**WARN: (IMPFP-3961):	The techSite 'padsite' has no related standard cells in the LEF/OA library. The calculations for this site type cannot be made unless standard cell models of this type exist in the LEF/OA library. Ignore this warning if the SITE is not used by the library. Alternatively, remove the SITE definition for the LEF/OA library to avoid this message.
+Type 'man IMPFP-3961' for more detail.
+Horizontal Layer M1 offset = 190 (derived)
+Vertical Layer M2 offset = 200 (derived)
+Start create_tracks
+Generated pitch 0.2 in Metal9 is different from 0.33 defined in technology file in unpreferred direction.
+Generated pitch 0.38 in Metal9 is different from 0.33 defined in technology file in preferred direction.
+Generated pitch 0.285 in Metal8 is different from 0.2 defined in technology file in unpreferred direction.
+Generated pitch 0.285 in Metal7 is different from 0.2 defined in technology file in preferred direction.
+Generated pitch 0.19 in Metal6 is different from 0.2 defined in technology file in unpreferred direction.
+Generated pitch 0.19 in Metal5 is different from 0.2 defined in technology file in preferred direction.
+Generated pitch 0.19 in Metal4 is different from 0.2 defined in technology file in unpreferred direction.
+Generated pitch 0.19 in Metal3 is different from 0.2 defined in technology file in preferred direction.
+Generated pitch 0.19 in Metal2 is different from 0.2 defined in technology file in unpreferred direction.
+Generated pitch 0.2 in Metal1 is different from 0.19 defined in technology file in unpreferred direction.
+Extraction setup Started for TopCell metro_card_pad_top 
+Initializing multi-corner RC extraction with 1 active RC Corners ...
+**WARN: (IMPEXT-6202):	In addition to the technology file, the capacitance table file is specified for all the RC corners. If the technology file  is already specified for all the RC corners, the capacitance table file is not required for pre_route and post_route extraction. In a new session, the capacitance table files can be removed from the create_rc_corner command to enable the technology file to be used for pre_route and post_route (effort level medium/high/signoff) extraction engines.
+Type 'man IMPEXT-6202' for more detail.
+Reading Capacitance Table File /data/loadtest-eda-design/INNOVUS/DESIGN/GPDK/TECH/capTable ...
+Cap table was created using Encounter 09.10-p004_1.
+Process name: GPDK45.
+**WARN: (IMPEXT-2760):	Layer M10 specified in the cap table is ignored because it is greater than the maximum number of layers, 9, specified in the technology LEF file. Check the cap table for the invalid layer specification.
+**WARN: (IMPEXT-2760):	Layer M11 specified in the cap table is ignored because it is greater than the maximum number of layers, 9, specified in the technology LEF file. Check the cap table for the invalid layer specification.
+**WARN: (IMPEXT-2776):	The via resistance between layers M1 and M2 is not defined in the capacitance table file. The via resistance of 6.7 Ohms defined in the LEF technology file will be used as via resistance between these layers.
+Type 'man IMPEXT-2776' for more detail.
+**WARN: (IMPEXT-2776):	The via resistance between layers M2 and M3 is not defined in the capacitance table file. The via resistance of 6.7 Ohms defined in the LEF technology file will be used as via resistance between these layers.
+Type 'man IMPEXT-2776' for more detail.
+**WARN: (IMPEXT-2776):	The via resistance between layers M3 and M4 is not defined in the capacitance table file. The via resistance of 6.7 Ohms defined in the LEF technology file will be used as via resistance between these layers.
+Type 'man IMPEXT-2776' for more detail.
+**WARN: (IMPEXT-2776):	The via resistance between layers M4 and M5 is not defined in the capacitance table file. The via resistance of 6.7 Ohms defined in the LEF technology file will be used as via resistance between these layers.
+Type 'man IMPEXT-2776' for more detail.
+**WARN: (IMPEXT-2776):	The via resistance between layers M5 and M6 is not defined in the capacitance table file. The via resistance of 1.675 Ohms defined in the LEF technology file will be used as via resistance between these layers.
+Type 'man IMPEXT-2776' for more detail.
+**WARN: (IMPEXT-2776):	The via resistance between layers M6 and M7 is not defined in the capacitance table file. The via resistance of 1.675 Ohms defined in the LEF technology file will be used as via resistance between these layers.
+Type 'man IMPEXT-2776' for more detail.
+**WARN: (IMPEXT-2776):	The via resistance between layers M7 and M8 is not defined in the capacitance table file. The via resistance of 1.675 Ohms defined in the LEF technology file will be used as via resistance between these layers.
+Type 'man IMPEXT-2776' for more detail.
+**WARN: (IMPEXT-2776):	The via resistance between layers M8 and M9 is not defined in the capacitance table file. The via resistance of 1.675 Ohms defined in the LEF technology file will be used as via resistance between these layers.
+Type 'man IMPEXT-2776' for more detail.
+**WARN: (IMPEXT-2710):	Basic Cap table for layer M10 is ignored because the layer is not specified in the technology LEF file.
+Importing multi-corner RC tables ... 
+Summary of Active RC-Corners : 
+ 
+ Analysis View: PH_typ_view
+    RC-Corner Name        : PH_typ_rc
+    RC-Corner Index       : 0
+    RC-Corner Temperature : 25 Celsius
+    RC-Corner Cap Table   : '/data/loadtest-eda-design/INNOVUS/DESIGN/GPDK/TECH/capTable'
+    RC-Corner PreRoute Res Factor         : 1
+    RC-Corner PreRoute Cap Factor         : 1
+    RC-Corner PostRoute Res Factor        : 1 {1 1 1}
+    RC-Corner PostRoute Cap Factor        : 1 {1 1 1}
+    RC-Corner PostRoute XCap Factor       : 1 {1 1 1}
+    RC-Corner PreRoute Clock Res Factor   : 1	[Derived from postRoute_res (effortLevel low)]
+    RC-Corner PreRoute Clock Cap Factor   : 1	[Derived from postRoute_cap (effortLevel low)]
+    RC-Corner PostRoute Clock Cap Factor  : 1 {1 1 1} 	[Derived from postRoute_cap (effortLevel low)]
+    RC-Corner PostRoute Clock Res Factor  : 1 {1 1 1} 	[Derived from postRoute_res (effortLevel low)]
+    RC-Corner PostRoute Clock coupling capacitance Factor : 1 {1 1 1} 
+    RC-Corner Technology file: '/data/loadtest-eda-design/INNOVUS/DESIGN/GPDK/TECH/qrcTechFile'
+Updating RC Grid density data for preRoute extraction ...
+Initializing multi-corner capacitance tables ... 
+Initializing multi-corner resistance tables ...
+The lower process node is set using set_design_mode and the technology file for TQuantus extraction specified. Therefore, the default value for PostRoute extraction mode's extract_rc_effort_level(extract_rc_effort_leveloption of the set_db) changed from 'low' to 'medium'.
+*Info: initialize multi-corner CTS.
+Total number of combinational cells: 317
+Total number of sequential cells: 150
+Total number of tristate cells: 10
+Total number of level shifter cells: 0
+Total number of power gating cells: 0
+Total number of isolation cells: 0
+Total number of power switch cells: 0
+Total number of pulse generator cells: 0
+Total number of always on buffers: 0
+Total number of retention cells: 0
+Total number of physical cells: 0
+List of usable buffers: CLKBUFX2 BUFX2 CLKBUFX3 BUFX3 CLKBUFX4 BUFX4 BUFX6 CLKBUFX6 BUFX8 CLKBUFX8 CLKBUFX12 BUFX12 CLKBUFX16 BUFX16 CLKBUFX20 BUFX20
+Total number of usable buffers: 16
+List of unusable buffers:
+Total number of unusable buffers: 0
+List of usable inverters: INVX1 INVXL CLKINVX1 INVX2 CLKINVX2 INVX3 CLKINVX3 INVX4 CLKINVX4 INVX6 CLKINVX6 INVX8 CLKINVX8 INVX12 CLKINVX12 INVX16 CLKINVX16 INVX20 CLKINVX20
+Total number of usable inverters: 19
+List of unusable inverters:
+Total number of unusable inverters: 0
+List of identified usable delay cells: DLY1X1 DLY1X4 DLY2X1 DLY2X4 DLY3X1 DLY3X4 DLY4X1 DLY4X4
+Total number of identified usable delay cells: 8
+List of identified unusable delay cells:
+Total number of identified unusable delay cells: 0
+Reading timing constraints file '/data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/pad_func.sdc' ...
+Current (total cpu=0:00:34.2, real=0:00:48.0, peak res=2688.1M, current mem=2688.1M)
+INFO (CTE): Constraints read successfully.
+------------------------------------------------------------------------------------
+CONSTRAINT READING SUMMARY                                                          
+------------------------------------------------------------------------------------
+Constraint                                        | Success        | Fail           
+------------------------------------------------------------------------------------
+set_clock_uncertainty                             | 2              | 0              
+set_input_delay                                   | 86             | 0              
+set_clock_transition                              | 1              | 0              
+get_clocks                                        | 89             | 0              
+set_input_transition                              | 43             | 0              
+set_false_path                                    | 1              | 0              
+create_clock                                      | 1              | 0              
+set_clock_gating_check                            | 1              | 0              
+get_ports                                         | 164            | 0              
+set_load                                          | 33             | 0              
+set_units                                         | 2              | 0              
+------------------------------------------------------------------------------------
+Ending "Constraint file reading stats" (total cpu=0:00:00.1, real=0:00:00.0, peak res=2723.5M, current mem=2723.5M)
+Current (total cpu=0:00:34.4, real=0:00:48.0, peak res=2723.5M, current mem=2723.5M)
+@file 26:
+@file 27: puts "insts : [llength [get_db insts]]"
+insts : 5629
+@file 28: puts "ports : [llength [get_db ports]]"
+ports : 78
+@file 29: puts "sram  : [get_db insts *sram_dut*]"
+sram  : inst:metro_card_pad_top/core_i/sram_dut
+@file 30: puts "pads  : [llength [get_db insts pad_*]]  (mong doi 78)"
+pads  : 78  (mong doi 78)
+#@ End verbose source: import.tcl
+@innovus 2> source floorplan.tcl 
+#@ Begin verbose source (pre): source floorplan.tcl 
+@file 1: # PH_run06: floorplan co pad ring (pad mo hinh 10x30 um) + macro.
+@file 2: # Core giu nguyen 240 x 205.2 nhu run04/05; le moi ben 40 um chua pad (30) + ring nguon (~6).
+@file 3: # Die ket qua ~ 320 x 285.3 um.
+@@file 4: create_floorplan -site CoreSite -core_size {240 205.2 40 40 40 40}
+**WARN: (IMPFP-4026):	Adjusting core to 'Bottom' to 40.090000 due to track/row misalignment. To force the value, specify the -no_snap_to_grid option or use floorplan_set_snap_rule command to specify the die/core to different grid.
+**WARN: (IMPFP-4026):	Adjusting core to 'Top' to 40.090000 due to track/row misalignment. To force the value, specify the -no_snap_to_grid option or use floorplan_set_snap_rule command to specify the die/core to different grid.
+**WARN: (IMPFP-3961):	The techSite 'padsite' has no related standard cells in the LEF/OA library. The calculations for this site type cannot be made unless standard cell models of this type exist in the LEF/OA library. Ignore this warning if the SITE is not used by the library. Alternatively, remove the SITE definition for the LEF/OA library to avoid this message.
+Type 'man IMPFP-3961' for more detail.
+Horizontal Layer M1 offset = 190 (derived)
+Vertical Layer M2 offset = 200 (derived)
+Start create_tracks
+Generated pitch 0.2 in Metal9 is different from 0.33 defined in technology file in unpreferred direction.
+Generated pitch 0.38 in Metal9 is different from 0.33 defined in technology file in preferred direction.
+Generated pitch 0.285 in Metal8 is different from 0.2 defined in technology file in unpreferred direction.
+Generated pitch 0.285 in Metal7 is different from 0.2 defined in technology file in preferred direction.
+Generated pitch 0.19 in Metal6 is different from 0.2 defined in technology file in unpreferred direction.
+Generated pitch 0.19 in Metal5 is different from 0.2 defined in technology file in preferred direction.
+Generated pitch 0.19 in Metal4 is different from 0.2 defined in technology file in unpreferred direction.
+Generated pitch 0.19 in Metal3 is different from 0.2 defined in technology file in preferred direction.
+Generated pitch 0.19 in Metal2 is different from 0.2 defined in technology file in unpreferred direction.
+Generated pitch 0.2 in Metal1 is different from 0.19 defined in technology file in unpreferred direction.
+**WARN: (IMPFP-325):	Floorplan of the design is resized. All current create_floorplan objects are automatically derived based on specified new create_floorplan. This may change blocks, fixed standard cells, existing routes and blockages.
+@file 5:
+@file 6: set bb [join [get_db current_design .bbox]]
+@file 7: lassign $bb dx0 dy0 dw dh
+@file 8: puts "PH_run06 die: $dw x $dh"
+PH_run06 die: 380.0 x 345.38
+@file 9:
+@file 10: # ---- macro: goc tren-trai cua core. core x 40..280, y ~40.07..245.27 ----
+@file 11: set MAC_W 160.0
+@file 12: set MAC_H 119.7
+@file 13: set MAC_X 50.0
+@file 14: # y snap vao row: 40.07 + 1.71*44 = 115.31 -> dinh macro cach dinh core ~10 um
+@file 15: set MAC_Y 115.31
+@file 16: set sram [get_db insts *sram_dut*]
+@@file 17: set_db $sram .location [list $MAC_X $MAC_Y]
+@@file 18: set_db $sram .orient r0
+@@file 19: set_db $sram .place_status fixed
+@file 20: puts "PH_run06 macro: x=$MAC_X y=$MAC_Y top=[expr {$MAC_Y + $MAC_H}] right=[expr {$MAC_X + $MAC_W}]"
+PH_run06 macro: x=50.0 y=115.31 top=235.01 right=210.0
+@file 21:
+@file 22: # ---- pad tin hieu ----
+@file 23: source pad_slots.tcl
+#@ Begin verbose source pad_slots.tcl (pre)
+@file 1: # PH_run06: bang slot pad (sinh boi gen_pad_files.py, dung sua tay).
+@file 2: set PAD_W 10.0
+@file 3: set PAD_H 30.0
+@file 4: set PAD_X0 30.0
+@file 5: set PAD_Y0 32.0
+@file 6: # {side idx inst cell}  idx: top/bottom = trai->phai, left/right = duoi->tren
+@file 7: set PAD_SLOTS {
+  {right 0 pad_PWDATA_0 PADIN}
+  {right 1 pad_PRDATA_0 PADOUT}
+  {right 2 pad_PWDATA_1 PADIN}
+  {right 3 pad_PRDATA_1 PADOUT}
+  {right 4 pad_PWDATA_2 PADIN}
+  {right 5 pad_PRDATA_2 PADOUT}
+  {right 6 pad_PWDATA_3 PADIN}
+  {right 7 pad_PRDATA_3 PADOUT}
+  {right 8 pad_PWDATA_4 PADIN}
+  {right 9 pad_PRDATA_4 PADOUT}
+  {right 10 pad_PWDATA_5 PADIN}
+  {right 11 pad_PRDATA_5 PADOUT}
+  {right 12 pad_PWDATA_6 PADIN}
+  {right 13 pad_PRDATA_6 PADOUT}
+  {right 14 pad_PWDATA_7 PADIN}
+  {right 15 pad_PRDATA_7 PADOUT}
+  {right 16 pad_PWDATA_8 PADIN}
+  {right 17 pad_PRDATA_8 PADOUT}
+  {right 18 pad_PWDATA_9 PADIN}
+  {right 19 pad_PRDATA_9 PADOUT}
+  {right 20 pad_PWDATA_10 PADIN}
+  {right 21 pad_PRDATA_10 PADOUT}
+  {bottom 2 pad_PWDATA_12 PADIN}
+  {bottom 3 pad_PRDATA_12 PADOUT}
+  {bottom 4 pad_PWDATA_13 PADIN}
+  {bottom 5 pad_PRDATA_13 PADOUT}
+  {bottom 6 pad_PWDATA_14 PADIN}
+  {bottom 7 pad_PRDATA_14 PADOUT}
+  {bottom 8 pad_PWDATA_15 PADIN}
+  {bottom 9 pad_PRDATA_15 PADOUT}
+  {bottom 10 pad_PWDATA_16 PADIN}
+  {bottom 11 pad_PRDATA_16 PADOUT}
+  {bottom 12 pad_PWDATA_17 PADIN}
+  {bottom 13 pad_PRDATA_17 PADOUT}
+  {bottom 14 pad_PWDATA_18 PADIN}
+  {bottom 15 pad_PRDATA_18 PADOUT}
+  {bottom 16 pad_PWDATA_19 PADIN}
+  {bottom 17 pad_PRDATA_19 PADOUT}
+  {bottom 18 pad_PWDATA_20 PADIN}
+  {bottom 19 pad_PRDATA_20 PADOUT}
+  {bottom 20 pad_PWDATA_21 PADIN}
+  {bottom 21 pad_PRDATA_21 PADOUT}
+  {bottom 22 pad_PWDATA_22 PADIN}
+  {bottom 23 pad_PRDATA_22 PADOUT}
+  {bottom 24 pad_PCLK PADIN}
+  {bottom 25 pad_PRESETN PADIN}
+  {left 0 pad_PWDATA_23 PADIN}
+  {left 1 pad_PRDATA_23 PADOUT}
+  {left 2 pad_PWDATA_24 PADIN}
+  {left 3 pad_PRDATA_24 PADOUT}
+  {left 4 pad_PWDATA_25 PADIN}
+  {left 5 pad_PRDATA_25 PADOUT}
+  {left 6 pad_PWDATA_26 PADIN}
+  {left 7 pad_PRDATA_26 PADOUT}
+  {left 8 pad_PWDATA_27 PADIN}
+  {left 9 pad_PRDATA_27 PADOUT}
+  {left 10 pad_PWDATA_28 PADIN}
+  {left 11 pad_PRDATA_28 PADOUT}
+  {left 12 pad_PWDATA_29 PADIN}
+  {left 13 pad_PRDATA_29 PADOUT}
+  {left 14 pad_PWDATA_30 PADIN}
+  {left 15 pad_PRDATA_30 PADOUT}
+  {left 16 pad_PWDATA_31 PADIN}
+  {left 17 pad_PRDATA_31 PADOUT}
+  {left 18 pad_PSEL PADIN}
+  {left 19 pad_PENABLE PADIN}
+  {left 20 pad_PWRITE PADIN}
+  {left 21 pad_PREADY PADOUT}
+  {top 16 pad_PADDR_0 PADIN}
+  {top 17 pad_PADDR_1 PADIN}
+  {top 18 pad_PADDR_2 PADIN}
+  {top 19 pad_PADDR_3 PADIN}
+  {top 20 pad_PADDR_4 PADIN}
+  {top 21 pad_PADDR_5 PADIN}
+  {top 22 pad_PADDR_6 PADIN}
+  {top 23 pad_PADDR_7 PADIN}
+  {top 24 pad_PWDATA_11 PADIN}
+  {top 25 pad_PRDATA_11 PADOUT}
+}
+@file 87: set PAD_POWER_SLOTS {
+  {bottom 0 pad_vdd_b PADVDD}
+  {bottom 1 pad_vss_b PADVSS}
+  {top 14 pad_vdd_t PADVDD}
+  {top 15 pad_vss_t PADVSS}
+}
+@file 93:
+@file 94: # Tra ve {x y orient} (goc duoi-trai cua bbox sau khi xoay). dw, dh = kich thuoc die.
+@file 95: # Pad thiet ke cho canh duoi (R0): phia core o +y. Canh tren R180, trai R270, phai R90.
+@file 96: proc pad_xy {side idx dw dh} {
+    global PAD_W PAD_H PAD_X0 PAD_Y0
+    switch -- $side {
+        bottom { return [list [expr {$PAD_X0 + $PAD_W * $idx}] 0.0 r0] }
+        top    { return [list [expr {$PAD_X0 + $PAD_W * $idx}] [format %.3f [expr {$dh - $PAD_H}]] r180] }
+        left   { return [list 0.0 [expr {$PAD_Y0 + $PAD_W * $idx}] r270] }
+        right  { return [list [format %.3f [expr {$dw - $PAD_H}]] [expr {$PAD_Y0 + $PAD_W * $idx}] r90] }
+    }
+    error "pad_xy: side khong hop le: $side"
+}
+#@ End verbose source pad_slots.tcl
+@file 24: set n 0
+@file 25: foreach s $PAD_SLOTS {
+    lassign $s side idx name cell
+    lassign [pad_xy $side $idx $dw $dh] x y orient
+    set inst [get_db insts $name]
+    if {$inst eq ""} { puts "**PH_run06 ERROR: khong thay instance $name"; continue }
+    set_db $inst .location [list $x $y]
+    set_db $inst .orient $orient
+    set_db $inst .place_status fixed
+    set_db $inst .dont_touch true
+    incr n
+}
+@file 36: puts "PH_run06 pad da dat: $n / 78"
+PH_run06 pad da dat: 78 / 78
+#@ End verbose source: floorplan.tcl
+@innovus 3> write_db DBS/03_floorplan
+#% Begin save design ... (date=11/06 13:35:04, mem=2966.0M)
+PH_typ_libs
+PH_typ_rc
+% Begin Save ccopt configuration ... (date=11/06 13:35:04, mem=2966.0M)
+% End Save ccopt configuration ... (date=11/06 13:35:04, total cpu=0:00:00.0, real=0:00:00.0, peak res=2967.5M, current mem=2967.5M)
+% Begin Save netlist data ... (date=11/06 13:35:04, mem=2967.5M)
+Writing Binary DB to DBS/03_floorplan/metro_card_pad_top.v.bin in single-threaded mode...
+% End Save netlist data ... (date=11/06 13:35:04, total cpu=0:00:00.1, real=0:00:00.0, peak res=2967.6M, current mem=2967.6M)
+Saving symbol-table file ...
+Saving congestion map file DBS/03_floorplan/metro_card_pad_top.route.congmap.gz ...
+% Begin Save AAE data ... (date=11/06 13:35:05, mem=2968.4M)
+Saving AAE Data ...
+% End Save AAE data ... (date=11/06 13:35:05, total cpu=0:00:00.1, real=0:00:00.0, peak res=3005.7M, current mem=2974.1M)
+Saving preference file DBS/03_floorplan/gui.pref.tcl ...
+Saving mode setting ...
+Saving root attributes to be loaded post write_db ...
+Saving global file ...
+Saving root attributes to be loaded previous write_db ...
+% Begin Save floorplan data ... (date=11/06 13:35:06, mem=2986.3M)
+Saving floorplan file ...
+% End Save floorplan data ... (date=11/06 13:35:06, total cpu=0:00:00.1, real=0:00:00.0, peak res=2986.3M, current mem=2986.3M)
+*info - save blackBox cells to lef file DBS/03_floorplan/metro_card_pad_top.bbox.lef
+Saving Drc markers ...
+... No Drc file written since there is no markers found.
+% Begin Save placement data ... (date=11/06 13:35:06, mem=2986.9M)
+** Saving stdCellPlacement_binary (version# 2) ...
+Save Adaptive View Pruning View Names to Binary file
+% End Save placement data ... (date=11/06 13:35:06, total cpu=0:00:00.1, real=0:00:00.0, peak res=2987.1M, current mem=2987.1M)
+% Begin Save routing data ... (date=11/06 13:35:06, mem=2987.1M)
+Saving route file ...
+*** Completed saveRoute (cpu=0:00:00.0 real=0:00:00.0 mem=2988.4M) ***
+% End Save routing data ... (date=11/06 13:35:07, total cpu=0:00:00.1, real=0:00:00.0, peak res=2987.4M, current mem=2987.4M)
+Saving property file DBS/03_floorplan/metro_card_pad_top.prop
+*** Completed saveProperty (cpu=0:00:00.0 real=0:00:00.0 mem=2993.0M) ***
+% Begin Save power constraints data ... (date=11/06 13:35:07, mem=2990.4M)
+% End Save power constraints data ... (date=11/06 13:35:07, total cpu=0:00:00.1, real=0:00:00.0, peak res=2990.8M, current mem=2990.8M)
+PH_typ_rc
+PH_typ_rc
+PH_typ_rc
+Generated self-contained design 03_floorplan
+#% End save design ... (date=11/06 13:35:08, total cpu=0:00:02.5, real=0:00:04.0, peak res=3019.4M, current mem=3011.7M)
+*** Message Summary: 0 warning(s), 0 error(s)
+
+0
+@innovus 4> foreach n {pad_CLK pad_PWDATA_0 pad_PADDR_0 pad_PRDATA_31} { puts "$n [get_db [ge_db insts $n] .location] [get_db [get_db insts $n] .orient]" }
+invalid command name "ge_db"
+invalid command name "ge_db"
+@innovus 5> foreach n {pad_CLK pad_PWDATA_0 pad_PADDR_0 pad_PRDATA_31} { puts "$n [get_db [get_db insts $n] .location] [get_db [get_db insts $n] .orient]" }
+pad_CLK  
+pad_PWDATA_0 {350.0 32.0} r90
+pad_PADDR_0 {190.0 315.38} r180
+pad_PRDATA_31 {0.0 202.0} r270
+@innovus 6> exit
+*** Message Summary: 1151 warning(s), 0 error(s)
+
+
+*** Memory Usage v#3 (Current mem = 3010.816M, initial mem = 963.285M) ***
+--- Ending "Innovus" (totcpu=0:01:12, real=0:13:17, mem=3010.8M) ---

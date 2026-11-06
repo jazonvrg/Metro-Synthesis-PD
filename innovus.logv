@@ -1,0 +1,241 @@
+[11/06 13:17:38      0s] 
+[11/06 13:17:38      0s] Cadence Innovus(TM) Implementation System.
+[11/06 13:17:38      0s] Copyright 2025 Cadence Design Systems, Inc. All rights reserved worldwide.
+[11/06 13:17:38      0s] 
+[11/06 13:17:38      0s] Version:	v25.12-s079_1, built Tue Nov 18 12:56:37 PST 2025
+[11/06 13:17:38      0s] Options:	-stylus 
+[11/06 13:17:38      0s] Date:		Fri Nov  6 13:17:38 2026
+[11/06 13:17:38      0s] Host:		shtp (x86_64 w/Linux 5.14.0-687.20.1.el9_8.x86_64) (20cores*80cpus*Intel(R) Xeon(R) Gold 6230 CPU @ 2.10GHz 28160KB)
+[11/06 13:17:38      0s] OS:		AlmaLinux 9.8 (Olive Jaguar)
+[11/06 13:17:38      0s] 
+[11/06 13:17:38      0s] License:
+[11/06 13:17:38      0s] 		[13:17:38.214457] Configured Lic search path (25.01-s002): 5280@10.253.1.1
+[11/06 13:17:38      0s] 
+[11/06 13:17:38      0s] 		invs	Innovus Implementation System	INVS100	25.1
+[11/06 13:17:38      0s] 		8 CPU jobs allowed with the current license(s). Use set_multi_cpu_usage to set your required CPU count.
+[11/06 13:17:52     14s] Memory management switch to non-aggressive memory release mode.
+[11/06 13:17:52     14s] 
+[11/06 13:17:52     14s] OS Mmap count monitoring thread starts. Limit of OS Mmap count is 65530
+[11/06 13:17:52     14s] 
+[11/06 13:17:52     14s] 
+[11/06 13:17:52     14s] 
+[11/06 13:17:54     16s] Reset Parastics called with the command setExtractRCMode -reset@(#)CDS: Innovus v25.12-s079_1 (64bit) 11/18/2025 12:56 (Linux 4.18.0-305.el8.x86_64)
+[11/06 13:17:58     20s] @(#)CDS: NanoRoute 25.12-s079_1 NR251112-0044/25_12-UB (database version 18.20.680) {superthreading v2.20}
+[11/06 13:17:58     20s] @(#)CDS: AAE 25.12-s028 (64bit) 11/18/2025 (Linux 4.18.0-305.el8.x86_64)
+[11/06 13:17:58     20s] @(#)CDS: CTE 25.12-s024_1 () Nov 12 2025 02:41:04 ( )
+[11/06 13:17:58     20s] @(#)CDS: SYNTECH 25.12-s006_1 () Oct 30 2025 11:18:17 ( )
+[11/06 13:17:58     20s] @(#)CDS: CPE v25.12-s020
+[11/06 13:17:58     20s] @(#)CDS: IQuantus/TQuantus 24.1.0-s365 (64bit) Mon Oct 13 00:44:28 PDT 2025 (Linux 4.18.0-305.el8.x86_64)
+[11/06 13:17:58     20s] @(#)CDS: OA 22.62-p016 Mon Oct 13 11:33:44 2025
+[11/06 13:17:58     20s] @(#)CDS: SGN 23.10-d005 (03-Oct-2023) (64 bit executable, TkQt5.15.9)
+[11/06 13:17:58     20s] @(#)CDS: RCDB 11.15.0
+[11/06 13:17:58     20s] @(#)CDS: STYLUS 25.12-e010_1 (08/20/2025 16:33 PDT)
+[11/06 13:17:58     20s] @(#)CDS: IntegrityPlanner-25.12-280 (25.12) (2025-11-11 08:41:39+0800)
+[11/06 13:17:58     20s] @(#)CDS: SYNTHESIS_ENGINE 25.12-s067
+[11/06 13:17:58     20s] @(#)CDS: TCDB v25.10-b001
+[11/06 13:17:58     20s] Create and set the environment variable TMPDIR to /data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/innovus_temp_2964884_1ce1340c-1738-4e6c-ae79-7f60f375d364_shtp_competitor01_mEXzsH.
+
+[11/06 13:17:58     20s] Create and set the environment variable TMPDIR to /data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/innovus_temp_2964884_1ce1340c-1738-4e6c-ae79-7f60f375d364_shtp_competitor01_mEXzsH.
+[11/06 13:17:58     20s] 
+[11/06 13:17:58     20s] Change the soft stacksize limit to 0.2%RAM (1028 mbytes). Set global soft_stack_size_limit to change the value.
+[11/06 13:18:00     22s] Info: Process UID = 2964884 / 1ce1340c-1738-4e6c-ae79-7f60f375d364 / 5IVqpofgJI
+[11/06 13:18:03     25s] 
+[11/06 13:18:03     25s] **INFO:  MMMC transition support version v31-84 
+[11/06 13:18:03     25s] 
+[11/06 13:18:08     30s] @innovus 1> gui_select -point {0.05700 0.08300}
+[11/06 13:19:05     33s] @innovus 2> source import.tcl 
+#@ Begin verbose source (pre): source import.tcl 
+[11/06 13:19:46     36s] @file 1: # PH_run06: import co pad. Top moi = metro_card_pad_top (wrapper), core = metro_card_top.
+[11/06 13:19:46     36s] @file 2: # Can co san trong thu muc run: pad_model.lef, pad_model.lib, metro_card_pad_top.v (chay gen_pad_files.py truoc).
+[11/06 13:19:46     36s] @file 3: set PDK /data/loadtest-eda-design/INNOVUS/DESIGN/GPDK
+[11/06 13:19:46     36s] @file 4: set SNAP /data/thithietkevmbd/home/competitor01/pd_metro_card/handoff/snap_20261104_1117_rtle257a4e0
+[11/06 13:19:46     36s] @file 5: set MAC /data/thithietkevmbd/home/competitor01/pd_metro_card/macro_PLACEHOLDER/v2
+[11/06 13:19:46     36s] @file 6:
+[11/06 13:19:46     36s] @file 7: # SDC goc co dong "current_design metro_card_top" (se tro vao module con) -> loai bo dong do.
+[11/06 13:19:46     36s] @file 8: set fin [open $SNAP/outputs/innovus_metro_card_top.default_emulate_constraint_mode.sdc r]
+[11/06 13:19:46     36s] @file 9: set sdc_txt [read $fin]
+[11/06 13:19:46     36s] @file 10: close $fin
+[11/06 13:19:46     36s] @file 11: set fout [open pad_func.sdc w]
+[11/06 13:19:46     36s] @file 12: foreach line [split $sdc_txt "\n"] {
+[11/06 13:19:46     36s]     if {[regexp {^\s*current_design\s} $line]} { continue }
+[11/06 13:19:46     36s]     puts $fout $line
+[11/06 13:19:46     36s] }
+[11/06 13:19:46     36s] @file 16: close $fout
+[11/06 13:19:46     36s] @file 17:
+[11/06 13:19:46     36s] @@file 18: set_db design_process_node 45
+[11/06 13:19:46     36s] **WARN: (IMPDB-6501):	"set_db design_process_node" will be obsoleted in future release. Remove it from the script to avoid the interruption of running the script in future.
+[11/06 13:19:46     36s] ##  Process: 45            (User Set)               
+[11/06 13:19:46     36s] ##     Node: (not set)                           
+[11/06 13:19:46     36s] 
+[11/06 13:19:46     36s] ##  Check design process and node:  
+[11/06 13:19:46     36s] ##  Design tech node is not set.
+[11/06 13:19:46     36s] 
+[11/06 13:19:46     36s] Applying the recommended capacitance filtering threshold values for 45nm process node: total_c_th=0, relative_c_th=1 and coupling_c_th=0.1.
+[11/06 13:19:46     36s] 	These values will be used by all post-route extraction engines, including TQuantus, IQuantus and Quantus QRC extraction.
+[11/06 13:19:46     36s] 	Capacitance filtering mode(extract_rc_cap_filter_mode option of the set_db) is 'relative_and_coupling' for all engines.
+[11/06 13:19:46     36s] 	The accuracy mode for post_route extract_rc_effort_level low extraction will be set to 'high'.
+[11/06 13:19:46     36s] 	Default value for EffortLevel(extract_rc_effort_level option of the set_db) in post_route extraction mode will be 'medium' if Quantus QRC technology file is specified else 'low'.
+[11/06 13:19:46     36s] @@file 19: read_mmmc [file join [pwd] mmmc_pad.tcl]
+[11/06 13:19:46     36s] #@ Begin verbose source /data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/mmmc_pad.tcl (pre)
+[11/06 13:19:46     36s] @file 1: # PH_run06 MMMC: giong mmmc_typ.tcl cua run04/05, them pad_model.lib va SDC da bo current_design.
+[11/06 13:19:46     36s] @file 2: set PDK /data/loadtest-eda-design/INNOVUS/DESIGN/GPDK
+[11/06 13:19:46     36s] @file 3: set MAC /data/thithietkevmbd/home/competitor01/pd_metro_card/macro_PLACEHOLDER/v2
+[11/06 13:19:46     36s] @file 4:
+[11/06 13:19:46     36s] @@file 5: create_library_set -name PH_typ_libs \
+[11/06 13:19:46     36s]     -timing [list $PDK/LIBS/GPDK045/timing/typical.lib $MAC/sram_placeholder_typical.lib [file join [pwd] pad_model.lib]]
+[11/06 13:19:46     36s] **ERROR: (TCLCMD-995):	Can not open file '/data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/pad_model.lib' for library set
+[11/06 13:19:46     36s] **ERROR: (IMPSE-110):	File '/data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/mmmc_pad.tcl' line 5: ..
+[11/06 13:19:46     36s] #@ End verbose source /data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/mmmc_pad.tcl
+[11/06 13:19:46     36s] .
+[11/06 13:19:46     36s]     while executing
+[11/06 13:19:46     36s] "create_library_set -name PH_typ_libs \
+[11/06 13:19:46     36s]     -timing [list $PDK/LIBS/GPDK045/timing/typical.lib $MAC/sram_placeholder_typical.lib [file join [pwd] pad_m..."
+[11/06 13:19:46     36s]     (file "/data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/mmmc_pad.tcl" line 5)
+[11/06 13:19:46     36s]     invoked from within
+[11/06 13:19:46     36s] "::se_source_orig /data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/mmmc_pad.tcl"
+[11/06 13:19:46     36s]     ("uplevel" body line 1)
+[11/06 13:19:46     36s]     invoked from within
+[11/06 13:19:46     36s] "uplevel [concat ::se_source_orig $args]"
+[11/06 13:19:46     36s]     invoked from within
+[11/06 13:19:46     36s] "if { !$encrypted && !$no_encoding && $encodingName != ""  } {
+[11/06 13:19:46     36s]                   set st [uplevel [concat ::se_source_orig " -encoding " $encodingName "..."
+[11/06 13:19:46     36s]     invoked from within
+[11/06 13:19:46     36s] "if {[::SE::source_verbose_file_state $file_name] == 1} {
+[11/06 13:19:46     36s]               ::SE::source_verbose_start $file_name
+[11/06 13:19:46     36s]               if { !$encrypted && !$no_en..."
+[11/06 13:19:46     36s]     invoked from within
+[11/06 13:19:46     36s] "if {$useTclVerbose} {
+[11/06 13:19:46     36s]           # use tcl internal method
+[11/06 13:19:46     36s]           set st ""
+[11/06 13:19:46     36s]           if {[::SE::source_verbose_file_state $file_name] == 1} {
+[11/06 13:19:46     36s]      ..."
+[11/06 13:19:46     36s]     invoked from within
+[11/06 13:19:46     36s] "if {$largeFile == 1} {
+[11/06 13:19:46     36s]     if {$enableVerbose == 0 && [::SE::isEchoFile] == 1} {
+[11/06 13:19:46     36s]       $putCmd "Sourcing $file_name"
+[11/06 13:19:46     36s]     }
+[11/06 13:19:46     36s]     set st [uplevel [concat..."
+[11/06 13:19:46     36s]     (procedure "source" line 197)
+[11/06 13:19:46     36s]     invoked from within
+[11/06 13:19:46     36s] "source /data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/mmmc_pad.tcl"
+[11/06 13:19:46     36s]     ("uplevel" body line 1)
+[11/06 13:19:46     36s]     invoked from within
+[11/06 13:19:46     36s] "uplevel #0 {source /data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/mmmc_pad.tcl}"
+[11/06 13:19:46     36s] **ERROR: (IMPSE-110):	File 'import.tcl' line 19: errors out.
+[11/06 13:19:46     36s] #@ End verbose source import.tcl
+[11/06 13:19:46     36s] 
+[11/06 13:19:46     36s] 
+[11/06 13:19:46     36s] @innovus 3> source floorplan.tcl 
+
+[11/06 13:19:52     36s] #@ Begin verbose source (pre): source floorplan.tcl 
+[11/06 13:19:52     36s] @file 1: # PH_run06: floorplan co pad ring (pad mo hinh 10x30 um) + macro.
+[11/06 13:19:52     36s] @file 2: # Core giu nguyen 240 x 205.2 nhu run04/05; le moi ben 40 um chua pad (30) + ring nguon (~6).
+[11/06 13:19:52     36s] @file 3: # Die ket qua ~ 320 x 285.3 um.
+[11/06 13:19:52     36s] @@file 4: create_floorplan -site CoreSite -core_size {240 205.2 40 40 40 40}
+[11/06 13:19:52     36s] **ERROR: (IMPTCM-162):	"CoreSite" does not match any object in design for specified type "site " object in command "create_floorplan".
+[11/06 13:19:52     36s] 
+[11/06 13:19:52     36s] Usage: create_floorplan [-help] [-core_margins_by {io die}] [-die_size_by_io_height {min max}] [-flip {n s f}] [-floorplan_origin {center llcorner}] [-match_to_site] [-no_resize]
+[11/06 13:19:52     36s]                         [-no_snap_to_grid] [-overlap_same_site_row] {-box_size <die_box io_box core_box> | -core_size <w h left bottom right top> | -die_size <w h left bottom right top> | -core_density_size <aspectratio [rowdensity [left bottom right top]]> | -stdcell_density_size <aspectratio [stdcelldensity [left bottom bight bop]]> | -keep_shape_density <util>} [-site <site> | -site_only <site>]
+[11/06 13:19:52     36s] 
+[11/06 13:19:52     36s] **ERROR: (IMPTCM-4):	The value "CoreSite" specified for the object type of argument "-site" is not a valid object. Review the command specification and remove the argument or specify a legal value.
+[11/06 13:19:52     36s] **ERROR: (IMPSE-110):	File 'floorplan.tcl' line 4: errors out.
+[11/06 13:19:52     36s] #@ End verbose source floorplan.tcl
+[11/06 13:19:52     36s] 
+[11/06 13:19:52     36s] 
+[11/06 13:19:52     36s] @innovus 4> source import.tcl 
+
+[11/06 13:20:21     38s] #@ Begin verbose source (pre): source import.tcl 
+[11/06 13:20:21     38s] @file 1: # PH_run06: import co pad. Top moi = metro_card_pad_top (wrapper), core = metro_card_top.
+[11/06 13:20:21     38s] @file 2: # Can co san trong thu muc run: pad_model.lef, pad_model.lib, metro_card_pad_top.v (chay gen_pad_files.py truoc).
+[11/06 13:20:21     38s] @file 3: set PDK /data/loadtest-eda-design/INNOVUS/DESIGN/GPDK
+[11/06 13:20:21     38s] @file 4: set SNAP /data/thithietkevmbd/home/competitor01/pd_metro_card/handoff/snap_20261104_1117_rtle257a4e0
+[11/06 13:20:21     38s] @file 5: set MAC /data/thithietkevmbd/home/competitor01/pd_metro_card/macro_PLACEHOLDER/v2
+[11/06 13:20:21     38s] @file 6:
+[11/06 13:20:21     38s] @file 7: # SDC goc co dong "current_design metro_card_top" (se tro vao module con) -> loai bo dong do.
+[11/06 13:20:21     38s] @file 8: set fin [open $SNAP/outputs/innovus_metro_card_top.default_emulate_constraint_mode.sdc r]
+[11/06 13:20:21     38s] @file 9: set sdc_txt [read $fin]
+[11/06 13:20:21     38s] @file 10: close $fin
+[11/06 13:20:21     38s] @file 11: set fout [open pad_func.sdc w]
+[11/06 13:20:21     38s] @file 12: foreach line [split $sdc_txt "\n"] {
+[11/06 13:20:21     38s]     if {[regexp {^\s*current_design\s} $line]} { continue }
+[11/06 13:20:21     38s]     puts $fout $line
+[11/06 13:20:21     38s] }
+[11/06 13:20:21     38s] @file 16: close $fout
+[11/06 13:20:21     38s] @file 17:
+[11/06 13:20:21     38s] @@file 18: set_db design_process_node 45
+[11/06 13:20:21     38s] **WARN: (IMPDB-6501):	"set_db design_process_node" will be obsoleted in future release. Remove it from the script to avoid the interruption of running the script in future.
+[11/06 13:20:21     38s] ##  Process: 45            (User Set)               
+[11/06 13:20:21     38s] ##     Node: (not set)                           
+[11/06 13:20:21     38s] 
+[11/06 13:20:21     38s] ##  Check design process and node:  
+[11/06 13:20:21     38s] ##  Design tech node is not set.
+[11/06 13:20:21     38s] 
+[11/06 13:20:21     38s] Applying the recommended capacitance filtering threshold values for 45nm process node: total_c_th=0, relative_c_th=1 and coupling_c_th=0.1.
+[11/06 13:20:21     38s] 	These values will be used by all post-route extraction engines, including TQuantus, IQuantus and Quantus QRC extraction.
+[11/06 13:20:21     38s] 	Capacitance filtering mode(extract_rc_cap_filter_mode option of the set_db) is 'relative_and_coupling' for all engines.
+[11/06 13:20:21     38s] 	The accuracy mode for post_route extract_rc_effort_level low extraction will be set to 'high'.
+[11/06 13:20:21     38s] 	Default value for EffortLevel(extract_rc_effort_level option of the set_db) in post_route extraction mode will be 'medium' if Quantus QRC technology file is specified else 'low'.
+[11/06 13:20:21     38s] @@file 19: read_mmmc [file join [pwd] mmmc_pad.tcl]
+[11/06 13:20:21     38s] #@ Begin verbose source /data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/mmmc_pad.tcl (pre)
+[11/06 13:20:21     38s] @file 1: # PH_run06 MMMC: giong mmmc_typ.tcl cua run04/05, them pad_model.lib va SDC da bo current_design.
+[11/06 13:20:21     38s] @file 2: set PDK /data/loadtest-eda-design/INNOVUS/DESIGN/GPDK
+[11/06 13:20:21     38s] @file 3: set MAC /data/thithietkevmbd/home/competitor01/pd_metro_card/macro_PLACEHOLDER/v2
+[11/06 13:20:21     38s] @file 4:
+[11/06 13:20:21     38s] @@file 5: create_library_set -name PH_typ_libs \
+[11/06 13:20:21     38s]     -timing [list $PDK/LIBS/GPDK045/timing/typical.lib $MAC/sram_placeholder_typical.lib [file join [pwd] pad_model.lib]]
+[11/06 13:20:21     38s] **ERROR: (TCLCMD-995):	Can not open file '/data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/pad_model.lib' for library set
+[11/06 13:20:21     38s] **ERROR: (IMPSE-110):	File '/data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/mmmc_pad.tcl' line 5: errors out.
+[11/06 13:20:21     38s] #@ End verbose source /data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/mmmc_pad.tcl
+[11/06 13:20:21     38s] 
+[11/06 13:20:21     38s]     while executing
+[11/06 13:20:21     38s] "create_library_set -name PH_typ_libs \
+[11/06 13:20:21     38s]     -timing [list $PDK/LIBS/GPDK045/timing/typical.lib $MAC/sram_placeholder_typical.lib [file join [pwd] pad_m..."
+[11/06 13:20:21     38s]     (file "/data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/mmmc_pad.tcl" line 5)
+[11/06 13:20:21     38s]     invoked from within
+[11/06 13:20:21     38s] "::se_source_orig /data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/mmmc_pad.tcl"
+[11/06 13:20:21     38s]     ("uplevel" body line 1)
+[11/06 13:20:21     38s]     invoked from within
+[11/06 13:20:21     38s] "uplevel [concat ::se_source_orig $args]"
+[11/06 13:20:21     38s]     invoked from within
+[11/06 13:20:21     38s] "if { !$encrypted && !$no_encoding && $encodingName != ""  } {
+[11/06 13:20:21     38s]                   set st [uplevel [concat ::se_source_orig " -encoding " $encodingName "..."
+[11/06 13:20:21     38s]     invoked from within
+[11/06 13:20:21     38s] "if {[::SE::source_verbose_file_state $file_name] == 1} {
+[11/06 13:20:21     38s]               ::SE::source_verbose_start $file_name
+[11/06 13:20:21     38s]               if { !$encrypted && !$no_en..."
+[11/06 13:20:21     38s]     invoked from within
+[11/06 13:20:21     38s] "if {$useTclVerbose} {
+[11/06 13:20:21     38s]           # use tcl internal method
+[11/06 13:20:21     38s]           set st ""
+[11/06 13:20:21     38s]           if {[::SE::source_verbose_file_state $file_name] == 1} {
+[11/06 13:20:21     38s]      ..."
+[11/06 13:20:21     38s]     invoked from within
+[11/06 13:20:21     38s] "if {$largeFile == 1} {
+[11/06 13:20:21     38s]     if {$enableVerbose == 0 && [::SE::isEchoFile] == 1} {
+[11/06 13:20:21     38s]       $putCmd "Sourcing $file_name"
+[11/06 13:20:21     38s]     }
+[11/06 13:20:21     38s]     set st [uplevel [concat..."
+[11/06 13:20:21     38s]     (procedure "source" line 197)
+[11/06 13:20:21     38s]     invoked from within
+[11/06 13:20:21     38s] "source /data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/mmmc_pad.tcl"
+[11/06 13:20:21     38s]     ("uplevel" body line 1)
+[11/06 13:20:21     38s]     invoked from within
+[11/06 13:20:21     38s] "uplevel #0 {source /data/thithietkevmbd/home/competitor01/pd_metro_card/runs/PH_run06_padring/mmmc_pad.tcl}"
+[11/06 13:20:21     38s] **ERROR: (IMPSE-110):	File 'import.tcl' line 19: errors out.
+[11/06 13:20:21     38s] #@ End verbose source import.tcl
+[11/06 13:20:21     38s] 
+[11/06 13:20:21     38s] 
+[11/06 13:20:21     38s] @innovus 5> exit
+[11/06 13:21:15     40s] 
+[11/06 13:21:15     40s] *** Summary of all messages that are not suppressed in this session:
+[11/06 13:21:15     40s] Severity  ID               Count  Summary                                  
+[11/06 13:21:15     40s] ERROR     IMPSE-110            5  File '%s' line %s: %s.                   
+[11/06 13:21:15     40s] WARNING   IMPDB-6501           2  "set_db design_process_node" will be obs...
+[11/06 13:21:15     40s] ERROR     IMPTCM-4             1  The value "%s" specified for the %s type...
+[11/06 13:21:15     40s] ERROR     IMPTCM-162           1  "%s" does not match any object in design...
+[11/06 13:21:15     40s] ERROR     TCLCMD-995           2  Can not open file '%s' for %s            
+*** Message Summary: 2 warning(s), 9 error(s)
+[11/06 13:21:15     40s] 
+[11/06 13:21:15     40s] 
+[11/06 13:21:15     40s] *** Memory Usage v#3 (Current mem = 1993.387M, initial mem = 960.402M) ***
+[11/06 13:21:15     40s] --- Ending "Innovus" (totcpu=0:00:40.9, real=0:03:37, mem=1993.4M) ---
